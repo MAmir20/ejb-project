@@ -7,6 +7,7 @@ import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import tn.enis.entity.Client;
 import tn.enis.entity.Compte;
 
 /**
@@ -28,11 +29,12 @@ public class CompteDao {
 	}
 
 	public void delete(Compte compte) {
-		entityManager.remove(compte);
+		entityManager.remove(entityManager.contains(compte) ? compte : entityManager.merge(compte));
 	}
 
 	public void update(Compte compte) {
 		entityManager.merge(compte);
+		entityManager.flush();
 	}
 
 	public List<Compte> findAll() {
@@ -44,6 +46,12 @@ public class CompteDao {
 	public List<Compte> findByCin(String cin) {
 		return entityManager.createQuery("select c from Compte c where c.client.cin = :cin", Compte.class)
 				.setParameter("cin", cin).getResultList();
+	}
+	
+	public List<Compte> findByNomClient(String nom) {
+		return entityManager
+				.createQuery("select c from Compte c where c.client.nom like :nom or c.client.prenom like :prenom", Compte.class)
+				.setParameter("nom", "%" + nom + "%").setParameter("prenom", "%" + nom + "%").getResultList();
 	}
 
 	/*

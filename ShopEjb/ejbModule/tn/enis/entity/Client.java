@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -20,7 +21,7 @@ public class Client implements Serializable /* obligatoire selon JPA */ {
 	private String nom;
 	private String prenom;
 //optionnel: relation bidirectionnelle
-	@OneToMany(mappedBy = "client")
+	@OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
 	private List<Compte> comptes;
 
 	public Client() {

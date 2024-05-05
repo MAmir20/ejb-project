@@ -17,11 +17,12 @@ import tn.enis.service.CompteService;
 /**
  * Servlet implementation class ShopController
  */
-@WebServlet("/ClientController")
-public class ClientController extends HttpServlet {
+@WebServlet("/CompteController")
+public class CompteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	@EJB
 	private ClientService clientService;
+
 	@EJB
 	private CompteService compteService;
 
@@ -29,36 +30,32 @@ public class ClientController extends HttpServlet {
 			throws ServletException, IOException {
 
 		if ("Add".equals(request.getParameter("action"))) {
+			float solde = Float.parseFloat(request.getParameter("solde"));
 			String cin = request.getParameter("cin");
-			String nom = request.getParameter("nom");
-			String prenom = request.getParameter("prenom");
-			Client client = new Client(cin, nom, prenom);
-			clientService.save(client);
-			
-			Compte compte = new Compte(0, client);
-			compteService.save(compte);
-			
-		} else if ("Delete".equals(request.getParameter("action"))) {
-			String cin = request.getParameter("cin");
-			clientService.delete(cin);
-		} else if ("Update".equals(request.getParameter("action"))) {
-			String cin = request.getParameter("cin");
-			String nom = request.getParameter("nom");
-			String prenom = request.getParameter("prenom");
 			Client client = clientService.findById(cin);
-			System.out.println(prenom);
-			client.setNom(nom);
-			client.setPrenom(prenom);
-			clientService.update(client);
+			Compte compte = new Compte(solde, client);
+			compteService.save(compte);
+		} else if ("Delete".equals(request.getParameter("action"))) {
+			Long rib = Long.parseLong(request.getParameter("rib"));
+			Compte compte = compteService.findById(rib);
+			compteService.delete(compte);
+		} else if ("Update".equals(request.getParameter("action"))) {
+			Long rib = Long.parseLong(request.getParameter("rib"));
+			float solde = Float.parseFloat(request.getParameter("solde"));
+			Compte compte = compteService.findById(rib);
+			compte.setSolde(solde);
+			compteService.update(compte);
 		} else if ("search".equals(request.getParameter("action"))) {
 			String search = request.getParameter("search");
-			request.setAttribute("clients", clientService.findAllByNomClient(search));
-			request.getRequestDispatcher("clients.jsp").forward(request, response);
+			request.setAttribute("clients", clientService.findAll());
+			request.setAttribute("comptes", compteService.findByCin(search));
+			request.getRequestDispatcher("comptes.jsp").forward(request, response);
 			return;
 		}
 
 		request.setAttribute("clients", clientService.findAll());
-		request.getRequestDispatcher("clients.jsp").forward(request, response);
+		request.setAttribute("comptes", compteService.findAll());
+		request.getRequestDispatcher("comptes.jsp").forward(request, response);
 
 	}
 

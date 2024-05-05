@@ -33,6 +33,7 @@ public class ClientDao {
 
 	public void update(Client client) {
 		entityManager.merge(client);
+		entityManager.flush();
 	}
 
 	public List<Client> findAll() {
