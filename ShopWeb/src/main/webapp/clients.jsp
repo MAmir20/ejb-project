@@ -75,9 +75,9 @@
 						<button type="submit" class="btn btn-primary" name="action" value="search">Comptes</button>
 						</form>
 					</span>
-						<a onClick="editClient(<%=client.getCin()%>, '<%=client.getNom()%>', '<%=client.getPrenom()%>')"
+						<a onClick="editClient('<%=client.getCin()%>', '<%=client.getNom()%>', '<%=client.getPrenom()%>')"
 						class="btn btn-warning">Edit</a>
-						<a onClick="deleteClient(<%=client.getCin()%>)"
+						<a onClick="deleteClient('<%=client.getCin()%>')"
 						class="btn btn-danger">Delete</a>
 					</td>
 				</tr>
