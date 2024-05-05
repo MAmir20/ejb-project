@@ -39,7 +39,7 @@
 		<%
 		List<Client> clients = (List<Client>) request.getAttribute("clients");
 		%>
-		<form action="ClientController" method="post">
+		<form action="ClientController" method="get">
 			<div class="mb-3">
 				<label for="search" class="form-label">Search</label> <input
 					type="text" class="form-control" name="search" id="search" />
@@ -54,7 +54,7 @@
 					<th>CIN</th>
 					<th>Nom</th>
 					<th>Prenom</th>
-					<th>Delete</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -66,8 +66,20 @@
 					<td><%=client.getCin()%></td>
 					<td><%=client.getNom()%></td>
 					<td><%=client.getPrenom()%></td>
-					<td><a onClick="deleteClient(<%=client.getCin()%>)"
-						class="btn btn-danger">Delete</a></td>
+					<td>
+					<span style="display:inline">
+						<form style="display:inline" action="CompteController" method="get">
+						<span style="display:inline" class="mb-3">
+						<input	type="hidden" name="search" id="search" value=<%=client.getCin() %> />
+						</span>
+						<button type="submit" class="btn btn-primary" name="action" value="search">Comptes</button>
+						</form>
+					</span>
+						<a onClick="editClient(<%=client.getCin()%>, '<%=client.getNom()%>', '<%=client.getPrenom()%>')"
+						class="btn btn-warning">Edit</a>
+						<a onClick="deleteClient(<%=client.getCin()%>)"
+						class="btn btn-danger">Delete</a>
+					</td>
 				</tr>
 				<%
 				}
@@ -75,6 +87,8 @@
 				%>
 			</tbody>
 		</table>
+		<hr />
+		<a href="/ShopWeb/CompteController" class="btn btn-secondary">Voir Comptes</a>
 	</div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -123,6 +137,73 @@ function deleteClient(cin) {
 		  }
 		});
 }
+
+function editClient(cin, nom, prenom) {
+    // Assuming you have some form for editing client information
+    // You can customize this according to your HTML structure
+    const formHtml = `
+        <form id="editClientForm">
+            <!-- Add your form fields here for editing client information -->
+            <input type="text" id="clientNom" placeholder="Nom du client" value="`+nom+`">
+            <input type="text" id="clientPrenom" placeholder="Prenom du client" value="`+prenom+`">
+        </form>
+    `;
+
+    // Show the form in Swal modal
+    swal({
+        title: "Modifier le client",
+        content: {
+            element: "div",
+            attributes: {
+                innerHTML: formHtml
+            }
+        },
+        buttons: {
+            annuler: true,
+            enregistrer: {
+                text: "Enregistrer",
+                value: "enregistrer",
+                className: "swal-button--confirm",
+            }
+        },
+    }).then((value) => {
+        if (value === "enregistrer") {
+            // Perform client update here
+            const nom = $("#clientNom").val();
+            const prenom = $("#clientPrenom").val();
+
+            $.ajax({
+		  		url : "ClientController",
+		  		type : "POST",
+		  		data : {
+		  		action : "Update",
+		  		cin : cin,
+		  		nom : nom,
+		  		prenom : prenom
+		  		},
+		  		success : function() {
+		  		$("#tr_cin_" + cin).load(location.href + " #tr_cin_" + cin+">*","" );
+		  		swal.stopLoading();
+		  		swal("Client mis à jour avec succès", {
+		  		     icon: "success",
+		  		   });
+		  		},
+		  		error : function() {
+		  		swal("Poof! Erreur serveur!", {
+		  		     icon: "error",
+		  		   });
+		  		}
+		  		});
+            console.log("Updated client nom:", nom);
+            console.log("Updated client prenom:", prenom);
+
+//             swal("Client mis à jour avec succès", {
+//                 icon: "success",
+//             });
+        }
+    });
+}
+
 </script>
 </body>
 </html>
