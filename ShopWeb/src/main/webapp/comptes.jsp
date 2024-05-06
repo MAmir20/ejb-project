@@ -42,7 +42,6 @@ $(function() {
         source: clientsDict,
         minLength: 1,
         select: function(event, ui) {
-            // Optional: handle selection event
             console.log(ui.item);
         }
     });
@@ -166,16 +165,12 @@ function deleteCompte(rib) {
 
 
 function editCompte(rib, solde) {
-    // Assuming you have some form for editing client information
-    // You can customize this according to your HTML structure
     const formHtml = `
         <form id="editCompteForm">
-            <!-- Add your form fields here for editing client information -->
             <input type="number" id="compteSolde" placeholder="Solde" value="`+solde+`">
         </form>
     `;
 
-    // Show the form in Swal modal
     swal({
         title: "Modifier le compte",
         content: {
@@ -194,7 +189,6 @@ function editCompte(rib, solde) {
         },
     }).then((value) => {
         if (value === "enregistrer") {
-            // Perform client update here
             const solde = $("#compteSolde").val();
 
             $.ajax({
@@ -218,11 +212,6 @@ function editCompte(rib, solde) {
 		  		   });
 		  		}
 		  		});
-            console.log("Updated compte solde:", solde);
-
-//             swal("Client mis à jour avec succès", {
-//                 icon: "success",
-//             });
         }
     });
 }

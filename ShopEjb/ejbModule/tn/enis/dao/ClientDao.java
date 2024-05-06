@@ -37,8 +37,6 @@ public class ClientDao {
 	}
 
 	public List<Client> findAll() {
-		// langage = EJB-QL, != SQL;
-		// EJB-QL =~ SQL orienté Objet, on utilise le nom de l'entité et non de la table
 		return entityManager.createQuery("select c from Client c", Client.class).getResultList();
 	}
 

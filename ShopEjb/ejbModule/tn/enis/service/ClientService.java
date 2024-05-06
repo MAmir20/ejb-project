@@ -10,7 +10,7 @@ import tn.enis.dao.ClientDao;
 import tn.enis.entity.Client;
 
 /**
- * Session Bean implementation class ShopService
+ * Session Bean implementation class ClientService
  */
 @Stateless
 @LocalBean

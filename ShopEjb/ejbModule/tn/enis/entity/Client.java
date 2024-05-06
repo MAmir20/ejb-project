@@ -13,14 +13,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "t_client")
 
-public class Client implements Serializable /* obligatoire selon JPA */ {
+public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id // PK
 	private String cin;
 	private String nom;
 	private String prenom;
-//optionnel: relation bidirectionnelle
+
 	@OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE)
 	private List<Compte> comptes;
 

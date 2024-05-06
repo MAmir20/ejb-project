@@ -10,7 +10,7 @@ import tn.enis.dao.CompteDao;
 import tn.enis.entity.Compte;
 
 /**
- * Session Bean implementation class ShopService
+ * Session Bean implementation class CompteService
  */
 @Stateless
 @LocalBean

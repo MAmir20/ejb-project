@@ -15,16 +15,16 @@ import tn.enis.dto.ProductDto;
 @LocalBean
 public class ShopService {
 	
-	private List<ProductDto> products = new ArrayList<ProductDto>(); //retourne la liste des Products achetés
+	private List<ProductDto> products = new ArrayList<ProductDto>();
 	private double total;
 	
-	public void add(ProductDto product) { //ajout au caddie
+	public void add(ProductDto product) {
 		products.add(product);
 	}
 	public List<ProductDto> listProducts(){
 		return products;
 	}
-	public boolean delete(String name) { //supprime le Product à la position index du caddie
+	public boolean delete(String name) {
 		return products.remove(new ProductDto(name,0,0));
 	}	
 	

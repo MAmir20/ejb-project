@@ -14,23 +14,17 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_compte")
-public class Compte implements Serializable /* obligatoire selon JPA */ {
+public class Compte implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	@Id // PK
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long rib;
 	private float solde;
 
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
-	// fetch:La manière de chargement des données
-	// --> EAGER: dès qu'on charge le compte, le client sera chargé
-	// --> LAZY: le client ne se charge pas avec le compte
-	// depuis JPA2: default fetch
-	// One (client)--> EAGER
-	// Many (List<Client>)--> LAZY
 
 	public Compte(float solde, Client client) {
 		super();

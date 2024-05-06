@@ -22,18 +22,10 @@ public class ShopController extends HttpServlet {
 	@EJB
 	private ShopService shopService;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public ShopController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if ("Add".equalsIgnoreCase(request.getParameter("action"))) {
@@ -53,10 +45,6 @@ public class ShopController extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub

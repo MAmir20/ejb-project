@@ -38,8 +38,6 @@ public class CompteDao {
 	}
 
 	public List<Compte> findAll() {
-		// langage = EJB-QL, != SQL;
-		// EJB-QL =~ SQL orienté Objet, on utilise le nom de l'entité et non de la table
 		return entityManager.createQuery("select c from Compte c", Compte.class).getResultList();
 	}
 
@@ -53,13 +51,4 @@ public class CompteDao {
 				.createQuery("select c from Compte c where c.client.nom like :nom or c.client.prenom like :prenom", Compte.class)
 				.setParameter("nom", "%" + nom + "%").setParameter("prenom", "%" + nom + "%").getResultList();
 	}
-
-	/*
-	 * public List<Compte> findAllByClient(String client) { // EJB-QL: on utilise le
-	 * nom de l'attribut et non celui du champ de la table // requete paramétrée, le
-	 * paramètre est déclaté avec ":" (:client) // puis remplacé par setParameter,
-	 * // NB: setParameter filtre les injections SQL return
-	 * entityManager.createQuery("select c from Compte c where c.nomClient=:client",
-	 * Compte.class) .setParameter("client", client).getResultList(); }
-	 */
 }

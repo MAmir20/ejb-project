@@ -139,17 +139,13 @@ function deleteClient(cin) {
 }
 
 function editClient(cin, nom, prenom) {
-    // Assuming you have some form for editing client information
-    // You can customize this according to your HTML structure
     const formHtml = `
         <form id="editClientForm">
-            <!-- Add your form fields here for editing client information -->
             <input type="text" id="clientNom" placeholder="Nom du client" value="`+nom+`">
             <input type="text" id="clientPrenom" placeholder="Prenom du client" value="`+prenom+`">
         </form>
     `;
 
-    // Show the form in Swal modal
     swal({
         title: "Modifier le client",
         content: {
@@ -168,7 +164,6 @@ function editClient(cin, nom, prenom) {
         },
     }).then((value) => {
         if (value === "enregistrer") {
-            // Perform client update here
             const nom = $("#clientNom").val();
             const prenom = $("#clientPrenom").val();
 
@@ -194,12 +189,6 @@ function editClient(cin, nom, prenom) {
 		  		   });
 		  		}
 		  		});
-            console.log("Updated client nom:", nom);
-            console.log("Updated client prenom:", prenom);
-
-//             swal("Client mis à jour avec succès", {
-//                 icon: "success",
-//             });
         }
     });
 }
